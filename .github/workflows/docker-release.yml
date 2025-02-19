@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - dev
+      - improve-evm-extractor
 
 jobs:
   build:
@@ -43,19 +44,19 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: rosen-bridge
+          username: zargarzadehm
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Metadata action
         uses: docker/metadata-action@v5
         id: meta
         with:
-          images: ghcr.io/rosen-bridge/watcher-service
+          images: ghcr.io/zargarzadehm/watcher-service
 
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: ${{ vars.PLATFORM_LIST || 'linux/amd64' }}
+          platforms: ${{ 'linux/amd64' }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
